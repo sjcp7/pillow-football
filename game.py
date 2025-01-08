@@ -5,7 +5,7 @@ from field import *
 imageHeight = 1080
 imageWidth = 1920
 
-img = Image.new("RGBA", (imageWidth, imageHeight), "white")
+img = Image.new("RGBA", (imageWidth, imageHeight), "grey")
 d = ImageDraw.Draw(img)
 # Draw guide lines
 numVetLines = 20
