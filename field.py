@@ -45,6 +45,7 @@ def draw_goal_boxes(d: ImageDraw):
     x1 = screen_width - x1
     x2 = x1 - 55
     d.polygon(((x1, x1*right_m + b), (x2, x2*right_m + b),(x2 - box_width, (x2*right_m + b)), (x1 - box_width, (x1*right_m + b))), width=3)
+
 def draw_goals(d: ImageDraw):
     # left goal
     b = field_lower_y - (left_m * field_lower_x);
@@ -52,7 +53,8 @@ def draw_goals(d: ImageDraw):
     x2 = x1 + 40
     goal_height = 70
     d.polygon(((x1, x1*left_m + b), (x2, x2*left_m + b),(x2, (x2*left_m + b) - goal_height), (x1, (x1*left_m + b) - goal_height)), width=3)
-
+    tw = 30; # width of the triangle
+    d.polygon(((x1, x1*left_m + b), (x1, (x1*left_m + b) - goal_height), (x1-tw, (x1-tw)*left_m + b + tw*left_m)), width=3);
     # right goal
     b = field_lower_y - (right_m * (screen_width-field_lower_x));
     x1 = screen_width - x1
@@ -60,6 +62,7 @@ def draw_goals(d: ImageDraw):
     goal_height = 70
     d.polygon(((x1, x1*right_m + b), (x2, x2*right_m + b),(x2, (x2*right_m + b) - goal_height), (x1, (x1*right_m + b) - goal_height)), width=3)
 
+    d.polygon(((x1, x1*right_m + b), (x1, (x1*right_m + b) - goal_height), (x1+tw, (x1+tw)*right_m + b - tw*right_m)), width=3);
 def draw_center(d: ImageDraw):
     width = 300
     height = 100
