@@ -1,6 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from field import *
 from player import *
+from animation import *
 
 #14 inch resolution
 imageHeight = 1080
@@ -19,6 +20,7 @@ for i in range(0,imageWidth, imageWidth // numHorLines):
     d.text((i,imageHeight - 30), str(i), "black");
     d.line((i+5, imageHeight) + (i+5, imageHeight - 15), "black");
 
-draw_field(d)
-draw_player(d, "red", 760, 760, 0.7)
-img.show()
+# draw_field(d)
+# draw_player(d, "red", 760, 760)
+# img.show()
+animate()
