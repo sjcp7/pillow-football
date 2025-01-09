@@ -27,20 +27,24 @@ def draw_penalty_boxes(d: ImageDraw):
     d.polygon(((x1, x1*left_m + b), (x2, x2*left_m + b),(x2 + box_width, (x2*left_m + b)), (x1 + box_width, (x1*left_m + b))), width=3)
 
     # right penalty box
-    b = field_lower_y - (right_m * field_lower_x);
-    x1 = 215
-    x2 = x1 + 100
-    box_width = 150
-    d.polygon(((x1, x1*right_m + b), (x2, x2*right_m + b),(x2 + box_width, (x2*right_m + b)), (x1 - box_width, (x1*right_m - b))), width=3)
+    b = field_lower_y - (right_m * (screen_width - field_lower_x))
+    x1 = screen_width - x1
+    x2 = x1 - 100
+    d.polygon(((x1, x1*right_m + b), (x2, x2*right_m + b),(x2 - box_width, (x2*right_m + b)), (x1 - box_width, (x1*right_m + b))), width=3)
 
 def draw_goal_boxes(d: ImageDraw):
-    # left draw_penalty box
+    # left goal box
     b = field_lower_y - (left_m * field_lower_x);
     x1 = 237
     x2 = x1 + 55
     box_width = 70
     d.polygon(((x1, x1*left_m + b), (x2, x2*left_m + b),(x2 + box_width, (x2*left_m + b)), (x1 + box_width, (x1*left_m + b))), width=3)
 
+    # right goal box
+    b = field_lower_y - (right_m * (screen_width - field_lower_x))
+    x1 = screen_width - x1
+    x2 = x1 - 55
+    d.polygon(((x1, x1*right_m + b), (x2, x2*right_m + b),(x2 - box_width, (x2*right_m + b)), (x1 - box_width, (x1*right_m + b))), width=3)
 def draw_goals(d: ImageDraw):
     # left goal
     b = field_lower_y - (left_m * field_lower_x);
