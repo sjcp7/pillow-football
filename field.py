@@ -2,7 +2,7 @@ from PIL import ImageDraw
 
 # proportions from the real world are maintained through the drawings
 # they are based on the bigger rectangle that makes the field
-print('PIL',PIL.__version__)
+
 screen_width = 1920
 field_height = 300
 field_offset_x = 200 # the difference between the x value of the upper and lower lines of the field
@@ -19,7 +19,9 @@ def draw_field(d: ImageDraw):
     draw_goals(d)
     draw_penalty_boxes(d)
     draw_goal_boxes(d)
-    d.ellipse((390, field_lower_y - 22 - (field_height / 2)), 10,fill="white")
+    d.circle((390, field_lower_y - 22 - (field_height / 2)), 4,fill="white")
+    d.circle((screen_width - 390, field_lower_y - 22 - (field_height / 2)), 4,fill="white")
+
 def draw_penalty_boxes(d: ImageDraw):
     # left penalty box
     b = field_lower_y - (left_m * field_lower_x);
