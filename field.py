@@ -1,4 +1,4 @@
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 import math
 import random
 from player import draw_player
@@ -34,7 +34,7 @@ def draw_grandstands(d: ImageDraw):
     """
     # Definir as coordenadas do retângulo branco que representa áreas adicionais de arquibancadas
     stands_top_left = (0, 0)
-    stands_bottom_right = (screen_width, field_lower_y - field_height - 5)
+    stands_bottom_right = (screen_width, field_lower_y - field_height - 100)
 
     # Desenhar o retângulo branco
     d.rectangle([stands_top_left, stands_bottom_right], fill="white", outline="white")
@@ -89,23 +89,65 @@ def draw_grandstands(d: ImageDraw):
         y_spacing
     )
 
-def fill_rectangle_with_standers(d: ImageDraw, top_left: tuple, bottom_right: tuple, colors: list, x_spacing: int, y_spacing: int):
+    #escreva coisas dentro deste retângulo
+    d.rectangle([(0,410), (2000, 510)], fill="black", outline="black")
+    add_text_to_rectangle(
+            d,
+            top_left=(0, 410),
+            bottom_right=(screen_width, 510),
+            text="TXIMUENETXIMUENE",
+            font_size=200,  # Ajuste o tamanho da fonte conforme necessário
+            text_color="white"
+        )
+
+def add_text_to_rectangle(d: ImageDraw, top_left: tuple, bottom_right: tuple, text: str, font_size: int = 40, text_color: str = "white"):
     """
-    Preenche um retângulo com standers organizados em uma grade com variações aleatórias.
+    Adiciona texto centralizado dentro de um retângulo especificado.
     
     :param d: Objeto ImageDraw.
     :param top_left: Tupla (x, y) representando o canto superior esquerdo do retângulo.
     :param bottom_right: Tupla (x, y) representando o canto inferior direito do retângulo.
-    :param colors: Lista de cores para os standers.
-    :param x_spacing: Espaçamento horizontal entre standers.
-    :param y_spacing: Espaçamento vertical entre standers.
+    :param text: Texto a ser exibido.
+    :param font_size: Tamanho da fonte do texto.
+    :param text_color: Cor do texto.
+    """
+    try:
+        # Definir a fonte e o tamanho do texto
+        font = ImageFont.truetype("arial.ttf", font_size)
+    except IOError:
+        # Caso a fonte não esteja disponível, usar a fonte padrão
+        font = ImageFont.load_default()
+
+    # Calcular a largura e altura do texto usando getbbox
+    bbox = font.getbbox(text)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+
+    # Calcular a posição para centralizar o texto
+    rect_width = bottom_right[0] - top_left[0]
+    rect_height = bottom_right[1] - top_left[1]
+    text_x = top_left[0] + (rect_width - text_width) / 2
+    text_y = top_left[1] + (rect_height - text_height) / 2
+
+    # Adicionar o texto ao retângulo
+    d.text((text_x, text_y), text, fill=text_color, font=font)
+
+
+def fill_rectangle_with_standers(d: ImageDraw, top_left: tuple, bottom_right: tuple, colors: list, x_spacing: int, y_spacing: int):
+    """
+    Preenche um retângulo com standers organizados em uma grade com variações aleatórias.
+        :param d: Objeto ImageDraw.
+        :param top_left: Tupla (x, y) representando o canto superior esquerdo do retângulo.
+        :param bottom_right: Tupla (x, y) representando o canto inferior direito do retângulo.
+        :param colors: Lista de cores para os standers.
+        :param x_spacing: Espaçamento horizontal entre standers.
+        :param y_spacing: Espaçamento vertical entre standers.
     """
     x_start, y_start = top_left
     x_end, y_end = bottom_right
 
     for row in range(y_start, y_end, y_spacing):
         for col in range(x_start, x_end, x_spacing):
-            # Adicionar pequenas variações nas posições
             x = col + random.randint(-5, 5)
             y = row + random.randint(-5, 5)
             
