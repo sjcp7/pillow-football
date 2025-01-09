@@ -1,8 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 from field import *
 
-
-def draw_player(d: ImageDraw, color: 'string', x: 'int', y: 'int', scale: 'float'):
+def draw_player(d: ImageDraw, color: str, x: int, y: int, scale: float):
     # head
     head_radius = int(10 * scale)
     d.circle((x + head_radius, y + head_radius), head_radius, "blue")
