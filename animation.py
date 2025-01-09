@@ -67,7 +67,7 @@ def animate():
             img = create_image(dimensions)
             d = ImageDraw.Draw(img)
             draw_positions(d, bpos, ppos)
-            img.save(f"frames/{frame_cnt}.png")
+            img.save(f"frames/img-{frame_cnt:03}.png")
             frame_cnt += 1
 
 

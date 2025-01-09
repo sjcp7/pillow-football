@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 1 ]; then
 	echo "Usage: create_animation.sh <python binary>"
 	exit
 fi
