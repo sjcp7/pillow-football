@@ -29,8 +29,6 @@ def draw_field(d: ImageDraw):
     draw_circle(d, (390, field_lower_y - 22 - (field_height / 2)), 4, fill="white")
     draw_circle(d, (screen_width - 390, field_lower_y - 22 - (field_height / 2)), 4, fill="white")
 
-    #draw_goal_scene(d)
-
 def draw_grandstands(d: ImageDraw):
     """
     Desenha as arquibancadas nas laterais do campo e preenche todas as áreas de arquibancadas com standers.
@@ -99,7 +97,7 @@ def draw_grandstands(d: ImageDraw):
             top_left=(0, 410),
             bottom_right=(screen_width, 510),
             text="TXIMUENETXIMUENE",
-            font_size=200,  # Ajuste o tamanho da fonte conforme necessário
+            font_size=200, 
             text_color="white"
         )
 
@@ -345,13 +343,35 @@ def draw_goal_scene(d: ImageDraw.Draw, width=1800, height=1000):
         x_spacing,
         y_spacing
     )
-    d.rectangle([(0,230), (2000, 350)], fill="black", outline="black")
+
+    # Faixa preta para texto
+    d.rectangle([(0, 230), (2000, 350)], fill="black", outline="black")
     add_text_to_rectangle(
-            d,
-            top_left=(0, 230),
-            bottom_right=(width, 350),
-            text="TXIMUENETXIMUENE",
-            font_size=200,  # Ajuste o tamanho da fonte conforme necessário
-            text_color="white"
-        )
+        d,
+        top_left=(0, 230),
+        bottom_right=(width, 350),
+        text="TXIMUENETXIMUENE",
+        font_size=200,  # Ajuste o tamanho da fonte conforme necessário
+        text_color="white"
+    )
+
+    # Linha branca
+    d.line([0, height // 3 + 340, width+140, height // 3 + 340], fill="white", width=10)
+
+    # Retângulo acima da linha
+    rect_top = height // 3 + 300
+    rect_bottom = height // 3 + 340
    
+    # Gol do goleiro
+    goal_top_left = (width // 2 - 200, rect_top - 120)
+    goal_bottom_right = (width // 2 + 200,height // 3 + 340)
+    d.rectangle(goal_top_left + goal_bottom_right, fill="gray", outline="white", width=5)
+   
+    #adicione o retângulo da grande área
+    penalty_top_left = (width // 2 - 400, height // 3 + 340)
+    penalty_bottom_right = (width // 2 + 400, rect_top+300)
+    d.rectangle(penalty_top_left + penalty_bottom_right, fill="green", outline="white", width=5)
+
+    draw_player(d, "red", width // 2, height // 3 + 340, 1.5)
+    
+    draw_player(d, "black", width // 2, height, 1.3)
