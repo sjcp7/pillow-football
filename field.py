@@ -17,6 +17,7 @@ left_m = -field_height / field_offset_x  # Inclinação da linha esquerda do cam
 right_m = -left_m  # Inclinação da linha direita do campo
 
 def draw_field(d: ImageDraw):
+    
     draw_grandstands(d)          # Desenha as arquibancadas
     draw_bigger_rectangle(d)
     draw_center(d)
@@ -27,6 +28,8 @@ def draw_field(d: ImageDraw):
     draw_goal_boxes(d)
     draw_circle(d, (390, field_lower_y - 22 - (field_height / 2)), 4, fill="white")
     draw_circle(d, (screen_width - 390, field_lower_y - 22 - (field_height / 2)), 4, fill="white")
+
+    #draw_goal_scene(d)
 
 def draw_grandstands(d: ImageDraw):
     """
@@ -320,3 +323,35 @@ def draw_circle(d: ImageDraw, center: tuple, radius: int, fill: str):
         outline="white"
     )
 
+def draw_goal_scene(d: ImageDraw.Draw, width=1800, height=1000):
+    # Fundo do campo (grama)
+    d.rectangle([0, 0, width+150, height+100], fill="green")
+
+    stands_top_left = (0, 0)
+    stands_bottom_right = (width+150, height // 3)
+    colors = ["blue", "red", "yellow", "orange", "purple", "pink", "cyan", "magenta"]
+
+    d.rectangle([0, 0, width+150, height // 3 - 50], fill="white")
+
+    x_spacing = 25
+    y_spacing = 50
+
+    # Preencher o retângulo branco com standers
+    fill_rectangle_with_standers(
+        d,
+        stands_top_left,
+        stands_bottom_right,
+        colors,
+        x_spacing,
+        y_spacing
+    )
+    d.rectangle([(0,230), (2000, 350)], fill="black", outline="black")
+    add_text_to_rectangle(
+            d,
+            top_left=(0, 230),
+            bottom_right=(width, 350),
+            text="TXIMUENETXIMUENE",
+            font_size=200,  # Ajuste o tamanho da fonte conforme necessário
+            text_color="white"
+        )
+   
