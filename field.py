@@ -1,4 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
+from typing import Tuple
 import math
 import random
 from player import draw_player
@@ -321,7 +322,10 @@ def draw_circle(d: ImageDraw, center: tuple, radius: int, fill: str):
         outline="white"
     )
 
-def draw_goal_scene(d: ImageDraw.Draw, width=1800, height=1000):
+def draw_goal_scene(
+        d: ImageDraw.Draw, width=1800, height=1000, 
+        striker_pos: Tuple[int, int, str] = (screen_width // 2, screen_height, "black"), keeper_pos: Tuple[int, int, str] = (screen_width // 2, screen_height // 3 + 340, "red"), 
+    ):
     # Fundo do campo (grama)
     d.rectangle([0, 0, width+150, height+100], fill="green")
 
@@ -372,6 +376,6 @@ def draw_goal_scene(d: ImageDraw.Draw, width=1800, height=1000):
     penalty_bottom_right = (width // 2 + 400, rect_top+300)
     d.rectangle(penalty_top_left + penalty_bottom_right, fill="green", outline="white", width=5)
 
-    draw_player(d, "red", width // 2, height // 3 + 340, 1.5)
+   # draw_player(d, keeper_pos[2], keeper_pos[0], keeper_pos[1], 1.5)
     
-    draw_player(d, "black", width // 2, height, 1.3)
+   # draw_player(d, striker_pos[2], striker_pos[0], striker_pos[1], 1.3)

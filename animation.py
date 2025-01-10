@@ -77,7 +77,7 @@ def draw_guide_lines(d: ImageDraw):
 def create_image(dimensions: Tuple[int, int]):
     img = Image.new("RGBA", dimensions, "grey")
     d = ImageDraw.Draw(img)
-    draw_guide_lines(d)
+#    draw_guide_lines(d)
     return img
 
 def draw_positions(d: ImageDraw, ball_pos: Tuple[int, int], players_pos: List[Tuple[int, int, str]]):
@@ -86,6 +86,19 @@ def draw_positions(d: ImageDraw, ball_pos: Tuple[int, int], players_pos: List[Tu
     for i in range(len(players_pos)):
         draw_player(d, players_pos[i][2], players_pos[i][0], players_pos[i][1])
 
+def draw_final_scene_positions(d: ImageDraw, ball_pos: Tuple[int, int], players_pos: List[Tuple[int, int, str, float]]):
+    draw_goal_scene(d, dimensions[0], dimensions[1])
+    draw_ball(d, ball_pos[0], ball_pos[1])
+    for i in range(len(players_pos)):
+        draw_player(d, players_pos[i][2], players_pos[i][0], players_pos[i][1], players_pos[i][3])
+
+
+ball_final_scene = [(960, 1010), (1102, 918), (836, 594)]
+final_scene_pos = [
+    [(960, 1010, "black", 1.2), (1102, 918, "black", 1.2), (1102, 918, "black", 1.2)], # striker
+
+    [(960, 702, "red", 1.5), (1026, 702, "red", 1.5), (985, 710, "red", 1.5)] # keeper
+]
 
 def animate():
     num_frames = 20
@@ -104,7 +117,23 @@ def animate():
             draw_positions(d, bpos, ppos)
             img.save(f"frames/img-{frame_cnt:03}.png")
             frame_cnt += 1
-    img = create_image(dimensions)
-    d = ImageDraw.Draw(img)
-    draw_goal_scene(d, width=dimensions[0], height=dimensions[1])
-    img.save(f"frames/img-{frame_cnt:03}.png")
+
+    # animating the last scene
+    num_frames = 30
+    for i in range(len(final_scene_pos[0]) - 1):
+        for j in range(num_frames):
+            ppos = []
+            bpos = ()
+            for k in range(len(final_scene_pos)):
+                bpos = (ball_final_scene[i][0] + j * (ball_final_scene[i+1][0] - ball_final_scene[i][0])/num_frames, ball_final_scene[i][1] + j*(ball_final_scene[i+1][1] - ball_final_scene[i][1])/num_frames)
+                step_x = j * (final_scene_pos[k][i + 1][0] - final_scene_pos[k][i][0]) / num_frames
+                step_y = j * (final_scene_pos[k][i + 1][1] - final_scene_pos[k][i][1]) / num_frames
+                ppos.append((final_scene_pos[k][i][0] + step_x, final_scene_pos[k][i][1] + step_y, final_scene_pos[k][i][2], final_scene_pos[k][i][3]))
+
+            img = create_image(dimensions)
+            d = ImageDraw.Draw(img)
+            draw_final_scene_positions(d, bpos, ppos)
+            img.save(f"frames/img-{frame_cnt:03}.png")
+            frame_cnt += 1
+
+
