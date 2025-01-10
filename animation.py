@@ -85,7 +85,8 @@ def draw_positions(d: ImageDraw, ball_pos: Tuple[int, int], players_pos: List[Tu
     draw_ball(d, ball_pos[0], ball_pos[1])
     for i in range(len(players_pos)):
         draw_player(d, players_pos[i][2], players_pos[i][0], players_pos[i][1])
-    
+
+
 def animate():
     num_frames = 20
     frame_cnt = 0
@@ -103,6 +104,7 @@ def animate():
             draw_positions(d, bpos, ppos)
             img.save(f"frames/img-{frame_cnt:03}.png")
             frame_cnt += 1
-
-
-
+    img = create_image(dimensions)
+    d = ImageDraw.Draw(img)
+    draw_goal_scene(d, width=dimensions[0], height=dimensions[1])
+    img.save(f"frames/img-{frame_cnt:03}.png")
